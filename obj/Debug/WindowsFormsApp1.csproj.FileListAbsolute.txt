@@ -8,3 +8,8 @@ C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsF
 C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Hunspellx64.dll
+C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Hunspellx86.dll
+C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\NHunspell.dll
+C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\NHunspell.pdb
+C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
