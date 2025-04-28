@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NHunspell; // Import NHunspell for spell-checking.
+using NHunspell;
 
 namespace WindowsFormsApp1
 {
@@ -273,10 +273,11 @@ namespace WindowsFormsApp1
                 // Create a txt file in the bin path with what is in the text box
                 string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.txt");
                 File.WriteAllText(filePath, richTextBox1.Text);
+                
                 // Start the Python script
                 ProcessStartInfo start = new ProcessStartInfo
                 {
-                    FileName = "python", // Ensure 'python' is in your PATH
+                    FileName = "python", 
                     Arguments = "Server.py",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
@@ -288,23 +289,58 @@ namespace WindowsFormsApp1
                 {
                     // Read standard output
                     string result = await process.StandardOutput.ReadToEndAsync();
-                    // Read standard error
-                    //string errorResult = await process.StandardError.ReadToEndAsync();
-
-                    // Show output
-                    if (!string.IsNullOrEmpty(result))
+                    // Split the result into sentences
+                    string[] sentences = result.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+                    
+                    // Create a form to display sentences for editing
+                    Form editForm = new Form();
+                    DataGridView dataGridView = new DataGridView { Dock = DockStyle.Fill, AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill };
+                    dataGridView.Columns.Add("Sentence", "Sentence");
+                    
+                    // Add a checkbox column for confirmation
+                    DataGridViewCheckBoxColumn confirmColumn = new DataGridViewCheckBoxColumn
                     {
-                        MessageBox.Show(result, "Server Output", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Name = "Confirm",
+                        HeaderText = "Confirm",
+                        Width = 50,
+                        ReadOnly = false // Allow editing
+                    };
+                    dataGridView.Columns.Add(confirmColumn);
+
+                    // Store original sentences
+                    string[] originalSentences = richTextBox1.Text.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+                    
+                    // Ensure both arrays have the same length
+                    int minLength = Math.Min(originalSentences.Length, sentences.Length);
+
+                    // Add sentences to DataGridView
+                    for (int i = 0; i < minLength; i++)
+                    {
+                        dataGridView.Rows.Add(sentences[i].Trim() + ".", false);
                     }
 
-                    // Show errors if any
-                   /* if (!string.IsNullOrEmpty(errorResult))
+                    editForm.Controls.Add(dataGridView);
+                    Button confirmButton = new Button { Text = "Confirm Changes", Dock = DockStyle.Bottom };
+                    editForm.Controls.Add(confirmButton);
+                    confirmButton.Click += (s, args) =>
                     {
-                        MessageBox.Show(errorResult, "Error Output", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }*/
+                        richTextBox1.Clear();
+                        for (int i = 0; i < minLength; i++)
+                        {
+                            if (Convert.ToBoolean(dataGridView.Rows[i].Cells["Confirm"].Value))
+                            {
+                                richTextBox1.AppendText(dataGridView.Rows[i].Cells["Sentence"].Value.ToString() + " ");
+                            }
+                            else
+                            {
+                                // Replace with original sentence if not confirmed
+                                richTextBox1.AppendText(originalSentences[i].Trim() + ". ");
+                            }
+                        }
+                        editForm.Close();
+                    };
 
-                    richTextBox1.Clear();
-                    richTextBox1.Text = result;
+                    editForm.ShowDialog();
                 }
             }
             catch (Exception ex)

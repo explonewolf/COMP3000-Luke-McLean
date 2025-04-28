@@ -29,7 +29,7 @@ def connect_to_grammar_llm():
     grammar_model = pipeline("text2text-generation", model="sherif31/T5-Grammer-Correction",device=0)
     
     # Generate corrected text
-    corrected_text = grammar_model(formatted_input, max_new_tokens=50)
+    corrected_text = grammar_model(formatted_input, max_new_tokens=999999)
     
     # Debugging output
     #print("Output Text:", output_text)  # Uncomment to see the output text
