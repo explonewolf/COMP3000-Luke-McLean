@@ -34,7 +34,6 @@ namespace WindowsFormsApp1
             contextMenu = new ContextMenuStrip();
             richTextBox1.MouseDown += RichTextBox1_MouseDown;
 
-            // Subscribe to RichTextBox text change event.
             richTextBox1.TextChanged += RichTextBox1_TextChanged;
         }
 
@@ -261,12 +260,15 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private async void button4_Click(object sender, EventArgs e)
         {
-            RunServer();
+            Button button = sender as Button;
+            button.Text = "Loading...";
+            await RunServer();
+            button.Text = "Grammerfy";
         }
 
-        private async void RunServer()
+        private async Task RunServer()
         {
             try
             {
@@ -333,7 +335,6 @@ namespace WindowsFormsApp1
                             }
                             else
                             {
-                                // Replace with original sentence if not confirmed
                                 richTextBox1.AppendText(originalSentences[i].Trim() + ". ");
                             }
                         }
