@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NHunspell;
 
+//Yesterday I goes to the park with my friends and we was playing soccer all day. It were very fun because everyone play really good. After the game, we decides to went to the cafe but it was close already. So we walks home slow because we was very tired and hungry.
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
@@ -26,7 +27,7 @@ namespace WindowsFormsApp1
             numericUpDown1.Value = 12;
 
             // Initialize spell checker with dictionary files.
-            string affPath = "en_GB.aff"; // Make sure these files are in your output directory.
+            string affPath = "en_GB.aff"; 
             string dicPath = "en_GB.dic";
             spellChecker = new Hunspell(affPath, dicPath);
 
@@ -352,20 +353,7 @@ namespace WindowsFormsApp1
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string username = textBox1.Text;
-            string password = textBox2.Text;
-            string hashedPassword = HashPassword(password);
-
-            if (ValidateLogin(username, hashedPassword))
-            {
-                MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                textBox1.Text = "";
-                textBox1.Text = "";
-            }
-            else
-            {
-                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            ShowLoginPrompt();
         }
 
         private void button5_Click_1(object sender, EventArgs e)
@@ -419,6 +407,44 @@ namespace WindowsFormsApp1
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void LoadButton_Click(object sender, EventArgs e)
+        {
+             OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
+                Title = "Open a text file"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                richTextBox1.Text = File.ReadAllText(openFileDialog.FileName);
+            }
+        }
+
+
+
+        private void ShowLoginPrompt()
+        {
+            using (LoginFourm loginForm = new LoginFourm())
+            {
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    string username = loginForm.Username;
+                    string password = loginForm.Password;
+                    string hashedPassword = HashPassword(password);
+
+                    if (ValidateLogin(username, hashedPassword))
+                    {
+                        MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
     }
 }

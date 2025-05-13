@@ -13,3 +13,4 @@ C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\Hunspell
 C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\NHunspell.dll
 C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\NHunspell.pdb
 C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
+C:\Users\firem\source\repos\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.LoginFourm.resources
